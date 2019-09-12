@@ -8,6 +8,7 @@ public class BuildingFire : MonoBehaviour
     [Range(0, 1)]
     public float fireIntensity;
     public float maxEmission;
+    public float extinguishDecay;
     
     void Update()
     {
@@ -16,5 +17,11 @@ public class BuildingFire : MonoBehaviour
             ParticleSystem.EmissionModule emission = fireEmitters[i].emission;
             emission.rateOverTime = fireIntensity * maxEmission;
         }
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        fireIntensity -= extinguishDecay;
+        if (fireIntensity < 0) fireIntensity = 0;
     }
 }
