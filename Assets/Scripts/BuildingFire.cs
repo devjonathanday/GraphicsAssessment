@@ -14,7 +14,7 @@ public class BuildingFire : MonoBehaviour
     {
         for (int i = 0; i < fireEmitters.Length; i++)
         {
-            ParticleSystem.EmissionModule emission = fireEmitters[i].emission;
+            var emission = fireEmitters[i].emission;
             emission.rateOverTime = fireIntensity * maxEmission;
         }
     }
