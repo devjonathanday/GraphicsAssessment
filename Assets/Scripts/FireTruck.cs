@@ -37,12 +37,13 @@ public class FireTruck : MonoBehaviour
     {
         deployed = true;
     }
-    public void ToggleWater(Toggle toggleSwitch)
+
+    public void ToggleWater(bool status)
     {
-        waterEmitting = toggleSwitch.isOn;
+        waterEmitting = status;
     }
-    public void UpdateWaterPower(Slider powerSlider)
+    public void UpdateWaterPower(float value)
     {
-        waterPower = powerSlider.value;
+        waterPower = value;
     }
 }
