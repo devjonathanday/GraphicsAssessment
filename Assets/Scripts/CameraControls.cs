@@ -23,5 +23,4 @@ public class CameraControls : MonoBehaviour
         if (clockwise) CWRotate = false;
         else CCWRotate = false;
     }
-    
 }

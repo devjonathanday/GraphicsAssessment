@@ -11,6 +11,7 @@ public class CharacterController : MonoBehaviour
     public float drag;
     private Rigidbody rBody;
     private Vector3 inputVector;
+    public GroundCheck groundCheck;
 
     [Header("Visuals")]
     public Transform model;
@@ -30,7 +31,12 @@ public class CharacterController : MonoBehaviour
 
         //Add force based on player input
         rBody.AddForce(inputVector.normalized * moveSpeed);
-        if (Input.GetKeyDown(KeyCode.Space)) rBody.AddForce(Vector3.up * jumpSpeed);
+
+        if (groundCheck.grounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            rBody.AddForce(Vector3.up * jumpSpeed);
+        }
+
         //Apply drag to X and Z axes
         rBody.velocity = new Vector3(rBody.velocity.x * drag, rBody.velocity.y, rBody.velocity.z * drag);
 
@@ -38,7 +44,9 @@ public class CharacterController : MonoBehaviour
         model.rotation = Quaternion.AngleAxis(-Mathf.Rad2Deg * Mathf.Atan2(rBody.velocity.z, rBody.velocity.x) + 90, Vector3.up);
 
         //Update animations based on Rigidbody values
-        animator.SetFloat("Speed", rBody.velocity.magnitude / maxVelocity);
+        Vector3 groundVelocity = rBody.velocity;
+        groundVelocity.y = 0;
+        animator.SetFloat("Speed", groundVelocity.magnitude / maxVelocity);
 
         if (rBody.velocity.y > yVelocityThreshold)
         {
@@ -49,7 +57,5 @@ public class CharacterController : MonoBehaviour
             animator.SetInteger("YVelocity", -1);
         }
         else animator.SetInteger("YVelocity", 0);
-
-        Debug.Log(rBody.velocity.y);
     }
 }
